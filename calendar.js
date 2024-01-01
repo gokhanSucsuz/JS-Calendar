@@ -25,8 +25,6 @@ setInterval(nowDateFunction, 1000);
 let dateFunction = new Date();
 const months = document.querySelector(".month");
 const now = document.querySelector(".now");
-let monthName = dateFunction.toLocaleString("default", { month: "long" });
-months.innerHTML = monthName + " - " + dateFunction.getFullYear();
 now.innerHTML = new Date(
   dateFunction.getFullYear(),
   dateFunction.getMonth(),
@@ -37,7 +35,7 @@ const next = document.querySelector(".carousel-control-next-icon");
 const days = document.querySelector(".days");
 function getCalendar() {
   const months = document.querySelector(".month");
-  let monthName = dateFunction.toLocaleString("default", { month: "long" });
+  let monthName = dateFunction.toLocaleString("en", { month: "long" });
   months.innerHTML = monthName + " - " + dateFunction.getFullYear();
   let prevMonthDays = dateFunction.getDate();
   let nextMonthDays = dateFunction.getDate();
