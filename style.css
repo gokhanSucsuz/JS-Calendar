@@ -1,5 +1,6 @@
 *{
     font-family: 'Concert One', sans-serif!important;
+
 }
 .days>div{
     width: 13%;
@@ -15,4 +16,7 @@
 
 .active-day{
    outline: 3px solid #fbbe07;
+}
+.container{
+        min-width: 396px!important;
 }
