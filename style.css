@@ -1,0 +1,18 @@
+*{
+    font-family: 'Concert One', sans-serif!important;
+}
+.days>div{
+    width: 13%;
+    text-align: center;
+    gap:1px;
+    font-weight: medium;
+}
+
+.days>div:hover{
+    
+    cursor: pointer;
+}
+
+.active-day{
+   outline: 3px solid rgb(34, 96, 97);
+}
