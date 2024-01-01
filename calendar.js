@@ -20,6 +20,7 @@ function nowDateFunction() {
       ? (seconds = "0" + nowDate.getSeconds())
       : nowDate.getSeconds();
 }
+nowDateFunction();
 setInterval(nowDateFunction, 1000);
 let dateFunction = new Date();
 const months = document.querySelector(".month");
@@ -64,7 +65,7 @@ function getCalendar() {
         "shadow-sm",
         "rounded-3",
         "bg-white",
-        "text-info",
+        "text-warning",
         "opacity-50",
         "day"
       );
@@ -79,7 +80,7 @@ function getCalendar() {
       "shadow-sm",
       "rounded-3",
       "bg-white",
-      "text-info",
+      "text-warning",
       "day"
     );
     i == 1 ? day.classList.add("active-day") : "";
@@ -94,7 +95,7 @@ function getCalendar() {
       "shadow-sm",
       "rounded-3",
       "bg-white",
-      "text-info",
+      "text-warning",
       "opacity-50",
       "day"
     );
@@ -106,11 +107,11 @@ function getCalendar() {
     item.addEventListener("click", (event) => {
       const btnWeeks = document.querySelectorAll(".btn-week");
       btnWeeks.forEach((item, index) => {
-        item.classList.remove("btn-danger");
+        item.classList.remove("btn-dark");
       });
       console.log(index);
       if (index == 0 || index == 7 || index == 14 || index == 21 || index == 28)
-        btnWeeks[0].classList.add("btn-danger");
+        btnWeeks[0].classList.add("btn-dark");
       else if (
         index == 1 ||
         index == 8 ||
@@ -118,7 +119,7 @@ function getCalendar() {
         index == 22 ||
         index == 29
       )
-        btnWeeks[1].classList.add("btn-danger");
+        btnWeeks[1].classList.add("btn-dark");
       else if (
         index == 2 ||
         index == 9 ||
@@ -126,7 +127,7 @@ function getCalendar() {
         index == 23 ||
         index == 30
       )
-        btnWeeks[2].classList.add("btn-danger");
+        btnWeeks[2].classList.add("btn-dark");
       else if (
         index == 3 ||
         index == 10 ||
@@ -134,7 +135,7 @@ function getCalendar() {
         index == 24 ||
         index == 31
       )
-        btnWeeks[3].classList.add("btn-danger");
+        btnWeeks[3].classList.add("btn-dark");
       else if (
         index == 4 ||
         index == 11 ||
@@ -142,7 +143,7 @@ function getCalendar() {
         index == 25 ||
         index == 32
       )
-        btnWeeks[4].classList.add("btn-danger");
+        btnWeeks[4].classList.add("btn-dark");
       else if (
         index == 5 ||
         index == 12 ||
@@ -150,7 +151,7 @@ function getCalendar() {
         index == 26 ||
         index == 33
       )
-        btnWeeks[5].classList.add("btn-danger");
+        btnWeeks[5].classList.add("btn-dark");
       else if (
         index == 6 ||
         index == 13 ||
@@ -158,7 +159,7 @@ function getCalendar() {
         index == 27 ||
         index == 34
       )
-        btnWeeks[6].classList.add("btn-danger");
+        btnWeeks[6].classList.add("btn-dark");
 
       mounthDays.forEach((item, index) => {
         item.classList.remove("active-day");
@@ -190,7 +191,7 @@ function changeDate(value) {
       dateFunction.setFullYear(dateFunction.getFullYear() - 1);
     }
     btnWeeks.forEach((item, index) => {
-      item.classList.remove("btn-danger");
+      item.classList.remove("btn-dark");
     });
     getCalendar();
   } else if (value == "next") {
@@ -202,7 +203,7 @@ function changeDate(value) {
       dateFunction.setFullYear(dateFunction.getFullYear() + 1);
     }
     btnWeeks.forEach((item, index) => {
-      item.classList.remove("btn-danger");
+      item.classList.remove("btn-dark");
     });
     getCalendar();
   }
