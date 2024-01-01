@@ -24,7 +24,6 @@ setInterval(nowDateFunction, 1000);
 let dateFunction = new Date();
 const months = document.querySelector(".month");
 const now = document.querySelector(".now");
-
 let monthName = dateFunction.toLocaleString("default", { month: "long" });
 months.innerHTML = monthName + " - " + dateFunction.getFullYear();
 now.innerHTML = new Date(
@@ -32,14 +31,11 @@ now.innerHTML = new Date(
   dateFunction.getMonth(),
   dateFunction.getDay() + 1
 ).toDateString();
-
 const prev = document.querySelector(".carousel-control-prev-icon");
 const next = document.querySelector(".carousel-control-next-icon");
 const days = document.querySelector(".days");
-
 function getCalendar() {
   const months = document.querySelector(".month");
-
   let monthName = dateFunction.toLocaleString("default", { month: "long" });
   months.innerHTML = monthName + " - " + dateFunction.getFullYear();
   let prevMonthDays = dateFunction.getDate();
@@ -47,10 +43,8 @@ function getCalendar() {
   let year = dateFunction.getFullYear();
   let month = dateFunction.getMonth();
   var today = dateFunction.getDay();
-
   let thisMonthDays = new Date(year, month + 1, 0).getDate();
   let lastDay = new Date(year, month + 1, 0).getDay();
-
   if (month == 0) prevMonthDays = new Date(year - 1, 12, 0).getDate();
   else prevMonthDays = new Date(year, month + 1, 0).getDate();
   console.log(
@@ -59,10 +53,8 @@ function getCalendar() {
     })} ayı gün sayısı`,
     prevMonthDays
   );
-
   if (month == 11) nextMonthDays = new Date(year + 1, 1, 0).getDate();
   else nextMonthDays = new Date(year, month + 2, 0).getDate();
-
   if (true) {
     if (today == 0) today = 7;
     for (let i = prevMonthDays - today + 1; i <= prevMonthDays; i++) {
@@ -181,14 +173,12 @@ function getCalendar() {
     });
   });
 }
-
 prev.addEventListener("click", () => {
   changeDate("prev");
 });
 next.addEventListener("click", () => {
   changeDate("next");
 });
-
 function changeDate(value) {
   const btnWeeks = document.querySelectorAll(".btn-week");
   if (value == "prev") {
@@ -217,5 +207,4 @@ function changeDate(value) {
     getCalendar();
   }
 }
-
 getCalendar();
