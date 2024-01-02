@@ -86,7 +86,7 @@ function getCalendar() {
     days.append(day);
   }
   if (lastDay == 6) lastDay = -1;
-  for (let i = 1; i <= 7 - (lastDay + 1); i++) {
+  for (let i = 1; i < 7 - (lastDay + 1); i++) {
     let day = document.createElement("div");
     day.classList.add(
       "p-2",
