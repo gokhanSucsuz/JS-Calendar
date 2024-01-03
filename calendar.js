@@ -41,7 +41,7 @@ function getCalendar() {
   let nextMonthDays = dateFunction.getDate();
   let year = dateFunction.getFullYear();
   let month = dateFunction.getMonth();
-  var today = dateFunction.getDay();
+  var today = dateFunction.getDay(2024, 0);
   let thisMonthDays = new Date(year, month + 1, 0).getDate();
   let lastDay = new Date(year, month + 1, 0).getDay();
   if (month == 0) prevMonthDays = new Date(year - 1, 12, 0).getDate();
@@ -55,8 +55,22 @@ function getCalendar() {
   if (month == 11) nextMonthDays = new Date(year + 1, 1, 0).getDate();
   else nextMonthDays = new Date(year, month + 2, 0).getDate();
   if (true) {
-    if (today == 0) today = 7;
-    for (let i = prevMonthDays - today + 1; i <= prevMonthDays; i++) {
+    if (today % 7 == 0) today = 0;
+    else if (today % 7 == 1) today = 1;
+    else if (today % 7 == 2) today = 2;
+    else if (today % 7 == 3) today = 3;
+    else if (today % 7 == 4) today = 4;
+    else if (today % 7 == 5) today = 5;
+    else if (today % 7 == 6) today = 6;
+
+    var firstDay = new Date(
+      dateFunction.getFullYear(),
+      dateFunction.getMonth(),
+      1
+    ).getDay();
+    console.log(firstDay);
+
+    for (let i = prevMonthDays - firstDay; i < prevMonthDays; i++) {
       let day = document.createElement("div");
       day.classList.add(
         "p-2",
@@ -71,7 +85,21 @@ function getCalendar() {
       days.append(day);
     }
   }
-  for (let i = 1; i <= thisMonthDays; i++) {
+  for (let i = 1; i < today; i++) {
+    let day = document.createElement("div");
+    day.classList.add(
+      "p-2",
+      "shadow-sm",
+      "rounded-3",
+      "bg-white",
+      "text-warning",
+      "day"
+    );
+    i == 1 ? day.classList.add("active-day") : "";
+    day.innerHTML = i;
+    days.append(day);
+  }
+  for (let i = today; i <= thisMonthDays; i++) {
     let day = document.createElement("div");
     day.classList.add(
       "p-2",
@@ -86,7 +114,7 @@ function getCalendar() {
     days.append(day);
   }
   if (lastDay == 6) lastDay = -1;
-  for (let i = 1; i < 7 - (lastDay + 1); i++) {
+  for (let i = 1; i <= 7 - (lastDay + 1); i++) {
     let day = document.createElement("div");
     day.classList.add(
       "p-2",
