@@ -58,6 +58,7 @@ function getCalendar() {
     })} ayı gün sayısı`,
     prevMonthDays
   );
+
   if (month == 11) nextMonthDays = new Date(year + 1, 1, 0).getDate();
   else nextMonthDays = new Date(year, month + 2, 0).getDate();
   if (true) {
@@ -69,7 +70,7 @@ function getCalendar() {
     else if (today % 7 == 5) today = 5;
     else if (today % 7 == 6) today = 6;
 
-    for (let i = prevMonthDays - firstDay; i < prevMonthDays; i++) {
+    for (let i = prevMonthDays - firstDay + 1; i <= prevMonthDays; i++) {
       let day = document.createElement("div");
       day.classList.add(
         "p-2",
@@ -84,7 +85,6 @@ function getCalendar() {
       days.append(day);
     }
   }
-
   for (let i = 1; i <= thisMonthDays; i++) {
     let day = document.createElement("div");
     day.classList.add(
