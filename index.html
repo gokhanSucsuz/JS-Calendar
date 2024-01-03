@@ -28,7 +28,51 @@
         <a class="navbar-brand" href="#">JS-Calendar APP</a>
       </div>
     </nav>
+
     <div id="app">
+      <div aria-live="polite" aria-atomic="true" class="position-relative">
+        <div class="toast-container position-fixed bottom-0 end-0">
+          <div
+            id="saveLiveToast"
+            class="toast"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+          >
+            <div class="toast-header">
+              <strong class="me-auto">Events Saved!</strong>
+              <small>Right Now!</small>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="toast"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="toast-body">Your event successfully saved!</div>
+          </div>
+
+          <div
+            id="deleteLiveToast"
+            class="toast my-5"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+          >
+            <div class="toast-header">
+              <strong class="me-auto">Event Deleted!</strong>
+              <small>Right Now!</small>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="toast"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="toast-body">Your event successfully deleted!</div>
+          </div>
+        </div>
+      </div>
       <div class="container rounded-4 p-5 my-5">
         <div
           class="row py-1 my-1 mx-auto rounded-4 bg-dark text-white col-sm-11 col-md-8 col-lg-7"
@@ -100,12 +144,44 @@
               Sat
             </div>
           </div>
-          <div
-            class="days shadow d-flex flex-wrap justify-content-between p-3 gap-1 rounded-4"
-          ></div>
+
+          <div class="position-relative">
+            <div
+              class="days shadow d-flex flex-wrap justify-content-between p-1 py-3 gap-1 rounded-4"
+            ></div>
+            <div
+              id="eventsDiv"
+              class="card text-bg-warning shadow rounded-3 d-none position-absolute top-0 w-100 start-0"
+            >
+              <div class="card-header rounded-3 d-flex justify-content-between">
+                <h5 id="eventDay"></h5>
+                <div type="button" id="btn-close" class="btn-close"></div>
+              </div>
+              <div class="card-body">
+                <input
+                  type="text"
+                  name="eventTittle"
+                  id="eventTittle"
+                  class="form-control mb-3 card-title"
+                  placeholder="Type your event's title..."
+                />
+                <textarea
+                  id="eventContent"
+                  class="form-control card-text my-3"
+                  aria-label="With textarea"
+                  placeholder="Type your event's here..."
+                ></textarea>
+                <div id="saveEventBtn" class="btn btn-success">Save Event</div>
+                <button id="deleteEventBtn" class="btn btn-danger">
+                  Delete Event
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

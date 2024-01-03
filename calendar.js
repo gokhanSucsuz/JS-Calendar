@@ -30,6 +30,11 @@ now.innerHTML = new Date(
   dateFunction.getMonth(),
   dateFunction.getDay() + 1
 ).toDateString();
+
+let records = localStorage.getItem("records")
+  ? JSON.parse(localStorage.getItem("records"))
+  : [];
+
 const prev = document.querySelector(".carousel-control-prev-icon");
 const next = document.querySelector(".carousel-control-next-icon");
 const days = document.querySelector(".days");
@@ -54,12 +59,6 @@ function getCalendar() {
   else nextMonthDays = new Date(year, month + 1, 0).getDate();
   if (month == 0) prevMonthDays = new Date(year - 1, 12, 0).getDate();
   else prevMonthDays = new Date(year, month, 0).getDate();
-  // console.log(
-  //   `${dateFunction.toLocaleString("default", {
-  //     month: "long"
-  //   })} ayı gün sayısı`,
-  //   prevMonthDays
-  // );
 
   if (true) {
     if (today % 7 == 0) today = 0;
@@ -80,7 +79,8 @@ function getCalendar() {
         "bg-white",
         "text-warning",
         "opacity-50",
-        "day"
+        "day",
+        "prev"
       );
       day.innerHTML = i;
       days.append(day);
@@ -110,19 +110,26 @@ function getCalendar() {
       "bg-white",
       "text-warning",
       "opacity-50",
-      "day"
+      "day",
+      "next"
     );
     day.innerHTML = i;
     days.append(day);
   }
+  const eventsDiv = document.querySelector("#eventsDiv");
+  const eventDay = document.querySelector("#eventDay");
+  const eventTittle = document.querySelector("#eventTittle");
+  const eventContent = document.querySelector("#eventContent");
+  const saveEventBtn = document.querySelector("#saveEventBtn");
+  const deleteEventBtn = document.querySelector("#deleteEventBtn");
   const mounthDays = document.querySelectorAll(".day");
   mounthDays.forEach((item, index) => {
     item.addEventListener("click", (event) => {
+      eventsDiv.classList.add("d-none");
       const btnWeeks = document.querySelectorAll(".btn-week");
-      btnWeeks.forEach((item, index) => {
+      btnWeeks.forEach((item) => {
         item.classList.remove("btn-dark");
       });
-      console.log(index);
       if (index == 0 || index == 7 || index == 14 || index == 21 || index == 28)
         btnWeeks[0].classList.add("btn-dark");
       else if (
@@ -174,19 +181,103 @@ function getCalendar() {
       )
         btnWeeks[6].classList.add("btn-dark");
 
-      mounthDays.forEach((item, index) => {
+      mounthDays.forEach((item) => {
         item.classList.remove("active-day");
       });
       event.target.classList.add("active-day");
 
-      now.innerHTML = new Date(
-        year,
-        month,
-        event.target.textContent
-      ).toDateString();
+      if (event.target.classList.contains("next")) {
+        now.innerHTML = new Date(
+          year,
+          month + 1,
+          event.target.textContent
+        ).toDateString();
+      } else if (event.target.classList.contains("prev"))
+        now.innerHTML = new Date(
+          year,
+          month - 1,
+          event.target.textContent
+        ).toDateString();
+      else
+        now.innerHTML = new Date(
+          year,
+          month,
+          event.target.textContent
+        ).toDateString();
+    });
+    item.addEventListener("dblclick", (event) => {
+      eventContent.value = "";
+      eventTittle.value = "";
+      eventsDiv.classList.remove("d-none");
+      eventsDiv.classList.add("d-flex");
+      if (records.length) {
+        records.forEach((record) => {
+          if (record[0] == now.innerHTML) {
+            eventDay.innerHTML = record[0];
+            eventTittle.value = record[1];
+            eventContent.value = record[2];
+          } else {
+            eventDay.innerHTML = now.innerHTML;
+          }
+        });
+      } else {
+        eventDay.innerHTML = now.innerHTML;
+      }
+
+      if (eventContent.value == "") deleteEventBtn.setAttribute("disabled", "");
+      else deleteEventBtn.removeAttribute("disabled");
+      console.log("now ", now.innerHTML);
     });
   });
 }
+const deleteToastAlert = document.getElementById("deleteLiveToast");
+const saveToastAlert = document.getElementById("saveLiveToast");
+const saveToastBootstrap = bootstrap.Toast.getOrCreateInstance(saveToastAlert);
+const deleteToastBootstrap =
+  bootstrap.Toast.getOrCreateInstance(deleteToastAlert);
+saveEventBtn.addEventListener("click", () => {
+  let record = [];
+  if (eventTittle.value.trim() == "" || eventContent.value.trim() == "") {
+    alert("You haven't entered any record!");
+  } else {
+    let findValue = records.find(myFindFunction);
+    if (!findValue) {
+      record.push(now.innerHTML.trim());
+      record.push(eventTittle.value.trim());
+      record.push(eventContent.value.trim());
+      records.push(record);
+      localStorage.setItem("records", JSON.stringify(records));
+      records = JSON.parse(localStorage.getItem("records"));
+      deleteEventBtn.removeAttribute("disabled");
+      saveToastBootstrap.show();
+      eventsDiv.classList.add("d-none");
+    } else {
+      alert("There is already same event here!");
+    }
+  }
+});
+deleteEventBtn.addEventListener("click", () => {
+  records.forEach((record, index) => {
+    if (record[0] == now.textContent) {
+      console.log(records, "  ", record);
+      delete records[index];
+      console.log(records, "  ", record);
+      const newRecords = records.filter((record) => record != null);
+      localStorage.setItem("records", JSON.stringify(newRecords));
+      eventContent.value = "";
+      eventTittle.value = "";
+      deleteEventBtn.setAttribute("disabled", "");
+      eventsDiv.classList.add("d-none");
+    }
+  });
+  records = JSON.parse(localStorage.getItem("records"));
+  deleteToastBootstrap.show();
+});
+
+function myFindFunction(value) {
+  return value[0] == now.innerHTML;
+}
+
 prev.addEventListener("click", () => {
   changeDate("prev");
 });
@@ -221,4 +312,10 @@ function changeDate(value) {
     getCalendar();
   }
 }
+
+const btnClose = document.querySelector("#btn-close");
+
+btnClose.addEventListener("click", (event) => {
+  event.target.parentElement.parentElement.classList.add("d-none");
+});
 getCalendar();
