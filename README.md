@@ -1,6 +1,6 @@
-# JS-Calendar
+# JS-Calendar(with events)
 
-Responsive Calendar App
+Responsive Calendar with Events App
 
 Designed with Javascript and Bootstrap5
 
