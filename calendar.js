@@ -52,7 +52,7 @@ function getCalendar() {
 
   if (month == 11) nextMonthDays = new Date(year + 1, 0, 0).getDate();
   else nextMonthDays = new Date(year, month + 1, 0).getDate();
-  if (month == 0) prevMonthDays = new Date(year - 1, 11, 0).getDate();
+  if (month == 0) prevMonthDays = new Date(year - 1, 12, 0).getDate();
   else prevMonthDays = new Date(year, month, 0).getDate();
   // console.log(
   //   `${dateFunction.toLocaleString("default", {
@@ -70,6 +70,7 @@ function getCalendar() {
     else if (today % 7 == 5) today = 5;
     else if (today % 7 == 6) today = 6;
 
+    console.log(prevMonthDays);
     for (let i = prevMonthDays - firstDay + 1; i <= prevMonthDays; i++) {
       let day = document.createElement("div");
       day.classList.add(
@@ -196,9 +197,9 @@ function changeDate(value) {
   const btnWeeks = document.querySelectorAll(".btn-week");
   if (value == "prev") {
     days.innerHTML = "";
-    if (dateFunction.getMonth() != 0)
+    if (dateFunction.getMonth() != 0) {
       dateFunction.setMonth(dateFunction.getMonth() - 1);
-    else {
+    } else {
       dateFunction.setMonth(11);
       dateFunction.setFullYear(dateFunction.getFullYear() - 1);
     }
