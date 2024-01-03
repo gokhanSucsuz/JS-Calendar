@@ -63,7 +63,7 @@ function getCalendar() {
     else if (today % 7 == 5) today = 5;
     else if (today % 7 == 6) today = 6;
 
-    var firstDay = new Date(
+    let firstDay = new Date(
       dateFunction.getFullYear(),
       dateFunction.getMonth(),
       1
