@@ -37,30 +37,30 @@ function getCalendar() {
   const months = document.querySelector(".month");
   let monthName = dateFunction.toLocaleString("en", { month: "long" });
   months.innerHTML = monthName + " - " + dateFunction.getFullYear();
-  let prevMonthDays = dateFunction.getDate();
-  let nextMonthDays = dateFunction.getDate();
   let year = dateFunction.getFullYear();
   let month = dateFunction.getMonth();
   var today = dateFunction.getDay(2024, 0);
   let thisMonthDays = new Date(year, month + 1, 0).getDate();
+  let prevMonthDays = new Date(year, month, 0).getDate();
+  let nextMonthDays = new Date(year, month + 1, 0).getDate();
   let lastDay = new Date(year, month + 1, 0).getDay();
   let firstDay = new Date(
     dateFunction.getFullYear(),
     dateFunction.getMonth(),
     1
   ).getDay();
-  console.log(firstDay);
-  if (month == 0) prevMonthDays = new Date(year - 1, 12, 0).getDate();
-  else prevMonthDays = new Date(year, month + 1, 0).getDate();
-  console.log(
-    `${dateFunction.toLocaleString("default", {
-      month: "long"
-    })} ayı gün sayısı`,
-    prevMonthDays
-  );
 
-  if (month == 11) nextMonthDays = new Date(year + 1, 1, 0).getDate();
-  else nextMonthDays = new Date(year, month + 2, 0).getDate();
+  if (month == 11) nextMonthDays = new Date(year + 1, 0, 0).getDate();
+  else nextMonthDays = new Date(year, month + 1, 0).getDate();
+  if (month == 0) prevMonthDays = new Date(year - 1, 11, 0).getDate();
+  else prevMonthDays = new Date(year, month, 0).getDate();
+  // console.log(
+  //   `${dateFunction.toLocaleString("default", {
+  //     month: "long"
+  //   })} ayı gün sayısı`,
+  //   prevMonthDays
+  // );
+
   if (true) {
     if (today % 7 == 0) today = 0;
     else if (today % 7 == 1) today = 1;
