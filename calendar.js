@@ -44,6 +44,12 @@ function getCalendar() {
   var today = dateFunction.getDay(2024, 0);
   let thisMonthDays = new Date(year, month + 1, 0).getDate();
   let lastDay = new Date(year, month + 1, 0).getDay();
+  let firstDay = new Date(
+    dateFunction.getFullYear(),
+    dateFunction.getMonth(),
+    1
+  ).getDay();
+  console.log(firstDay);
   if (month == 0) prevMonthDays = new Date(year - 1, 12, 0).getDate();
   else prevMonthDays = new Date(year, month + 1, 0).getDate();
   console.log(
@@ -63,13 +69,6 @@ function getCalendar() {
     else if (today % 7 == 5) today = 5;
     else if (today % 7 == 6) today = 6;
 
-    let firstDay = new Date(
-      dateFunction.getFullYear(),
-      dateFunction.getMonth(),
-      1
-    ).getDay();
-    console.log(firstDay);
-
     for (let i = prevMonthDays - firstDay; i < prevMonthDays; i++) {
       let day = document.createElement("div");
       day.classList.add(
@@ -85,21 +84,8 @@ function getCalendar() {
       days.append(day);
     }
   }
-  for (let i = 1; i < today; i++) {
-    let day = document.createElement("div");
-    day.classList.add(
-      "p-2",
-      "shadow-sm",
-      "rounded-3",
-      "bg-white",
-      "text-warning",
-      "day"
-    );
-    i == 1 ? day.classList.add("active-day") : "";
-    day.innerHTML = i;
-    days.append(day);
-  }
-  for (let i = today; i <= thisMonthDays; i++) {
+
+  for (let i = 1; i <= thisMonthDays; i++) {
     let day = document.createElement("div");
     day.classList.add(
       "p-2",
