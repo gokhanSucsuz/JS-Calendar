@@ -38,6 +38,7 @@ let records = localStorage.getItem("records")
 const prev = document.querySelector(".carousel-control-prev-icon");
 const next = document.querySelector(".carousel-control-next-icon");
 const days = document.querySelector(".days");
+const selectArea = document.querySelector("#selectArea");
 function getCalendar() {
   const months = document.querySelector(".month");
   let monthName = dateFunction.toLocaleString("en", { month: "long" });
@@ -123,8 +124,10 @@ function getCalendar() {
   const saveEventBtn = document.querySelector("#saveEventBtn");
   const deleteEventBtn = document.querySelector("#deleteEventBtn");
   const mounthDays = document.querySelectorAll(".day");
+
   mounthDays.forEach((item, index) => {
     item.addEventListener("click", (event) => {
+      selectArea.innerHTML = "";
       eventsDiv.classList.add("d-none");
       const btnWeeks = document.querySelectorAll(".btn-week");
       btnWeeks.forEach((item) => {
@@ -210,15 +213,21 @@ function getCalendar() {
       eventTittle.value = "";
       eventsDiv.classList.remove("d-none");
       eventsDiv.classList.add("d-flex");
+      const selectOpt = document.createElement("select");
+      selectOpt.classList.add("form-select");
+      selectOpt.innerHTML = `<option selected>Select event</option>`;
+
       if (records.length) {
-        records.forEach((record) => {
+        records.forEach((record, index) => {
           if (record[0] == now.innerHTML) {
             eventDay.innerHTML = record[0];
             eventTittle.value = record[1];
             eventContent.value = record[2];
+            selectOpt.innerHTML += `<option value="${index}">${record[1]}</option>`;
           } else {
             eventDay.innerHTML = now.innerHTML;
           }
+          selectArea.append(selectOpt);
         });
       } else {
         eventDay.innerHTML = now.innerHTML;
@@ -240,20 +249,35 @@ saveEventBtn.addEventListener("click", () => {
   if (eventTittle.value.trim() == "" || eventContent.value.trim() == "") {
     alert("You haven't entered any record!");
   } else {
-    let findValue = records.find(myFindFunction);
-    if (!findValue) {
-      record.push(now.innerHTML.trim());
-      record.push(eventTittle.value.trim());
-      record.push(eventContent.value.trim());
-      records.push(record);
-      localStorage.setItem("records", JSON.stringify(records));
-      records = JSON.parse(localStorage.getItem("records"));
-      deleteEventBtn.removeAttribute("disabled");
-      saveToastBootstrap.show();
-      eventsDiv.classList.add("d-none");
-    } else {
-      alert("There is already same event here!");
+    // let findValue = records.find(myFindFunction);
+    // if (!findValue) {
+    record.push(now.innerHTML.trim());
+    record.push(eventTittle.value.trim());
+    record.push(eventContent.value.trim());
+    records.push(record);
+    localStorage.setItem("records", JSON.stringify(records));
+    records = JSON.parse(localStorage.getItem("records"));
+    deleteEventBtn.removeAttribute("disabled");
+    saveToastBootstrap.show();
+    eventsDiv.classList.add("d-none");
+    selectArea.innerHTML = "";
+    const selectOpt = document.createElement("select");
+    selectOpt.classList.add("form-select");
+    selectOpt.innerHTML = `<option selected>Open this select menu</option>`;
+    if (records.length) {
+      records.forEach((record, index) => {
+        eventDay.innerHTML = record[0];
+        eventTittle.value = record[1];
+        eventContent.value = record[2];
+        selectOpt.innerHTML += `<option value="${index}">${record[1]}</option>`;
+
+        selectArea.append(selectOpt);
+      });
     }
+
+    // } else {
+    //   alert("There is already same event here!");
+    // }
   }
 });
 deleteEventBtn.addEventListener("click", () => {
@@ -272,11 +296,12 @@ deleteEventBtn.addEventListener("click", () => {
   });
   records = JSON.parse(localStorage.getItem("records"));
   deleteToastBootstrap.show();
+  selectArea.innerHTML = "";
 });
 
-function myFindFunction(value) {
-  return value[0] == now.innerHTML;
-}
+// function myFindFunction(value) {
+//   return value[0] == now.innerHTML;
+// }
 
 prev.addEventListener("click", () => {
   changeDate("prev");
@@ -317,5 +342,6 @@ const btnClose = document.querySelector("#btn-close");
 
 btnClose.addEventListener("click", (event) => {
   event.target.parentElement.parentElement.classList.add("d-none");
+  selectArea.innerHTML = "";
 });
 getCalendar();
