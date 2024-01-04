@@ -236,9 +236,20 @@ function getCalendar() {
       if (eventContent.value == "") deleteEventBtn.setAttribute("disabled", "");
       else deleteEventBtn.removeAttribute("disabled");
       console.log("now ", now.innerHTML);
+      const selectOpt2 = document.querySelector("select");
+      console.log(selectOpt2);
+      selectOpt2.addEventListener("change", (event) => {
+        records.forEach((record, index) => {
+          if (index == parseInt(event.target.value)) {
+            eventTittle.value = record[1];
+            eventContent.value = record[2];
+          }
+        });
+      });
     });
   });
 }
+
 const deleteToastAlert = document.getElementById("deleteLiveToast");
 const saveToastAlert = document.getElementById("saveLiveToast");
 const saveToastBootstrap = bootstrap.Toast.getOrCreateInstance(saveToastAlert);
